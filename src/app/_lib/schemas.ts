@@ -54,10 +54,5 @@ export const TaskFormSchema = TaskSchema.omit({
   }
 );
 
-export const TaskFieldSchemas = z.object({
-  title: titleSchema,
-  priority: prioritySchema,
-});
-
 // TODO: エラーメッセージのカスタマイズ
 // ヒント: errorMap を使用して統一的なエラーメッセージを設定
