@@ -6,7 +6,7 @@ export function zodErrorToFormErrors(
 ): Record<string, string> {
   const formErrors: Record<string, string> = {};
 
-  error.errors.forEach((err) => {
+  error.issues.forEach((err) => {
     const fieldPath = err.path.join(".");
     // 最初のエラーメッセージのみを保持（複数エラーの場合）
     if (!formErrors[fieldPath]) {
@@ -18,7 +18,10 @@ export function zodErrorToFormErrors(
 }
 
 // 個別フィールドバリデーション
-export function validateField(schema: z.ZodSchema, value: any): string | null {
+export function validateField(
+  schema: z.ZodSchema,
+  value: string
+): string | null {
   const result = schema.safeParse(value);
 
   if (result.success) {
@@ -26,12 +29,12 @@ export function validateField(schema: z.ZodSchema, value: any): string | null {
   }
 
   // 最初のエラーメッセージを返す
-  return result.error.errors[0]?.message || "入力内容を確認してください";
+  return result.error.issues[0]?.message || "入力内容を確認してください";
 }
 
 // FormDataからオブジェクトへの変換
-export function formDataToObject(formData: FormData): Record<string, any> {
-  const obj: Record<string, any> = {};
+export function formDataToObject(formData: FormData): Record<string, string> {
+  const obj: Record<string, string> = {};
 
   for (const [key, value] of formData.entries()) {
     // ファイル以外の値を文字列として取得

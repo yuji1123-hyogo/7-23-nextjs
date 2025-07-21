@@ -9,7 +9,7 @@ import { z } from "zod";
 // ヒント: priority は 'low' | 'medium' | 'high' の enum
 // ヒント: 日本語のエラーメッセージを設定
 
-const titleSchema = z
+export const titleSchema = z
   .string({
     required_error: "タイトルを入力してください",
   })
@@ -20,7 +20,7 @@ const titleSchema = z
     "テストを含むタイトルは10文字以上で入力してください"
   );
 
-const prioritySchema = z.enum(["low", "medium", "high"], {
+export const prioritySchema = z.enum(["low", "medium", "high"], {
   errorMap: () => ({ message: "優先度を選択してください" }),
 });
 

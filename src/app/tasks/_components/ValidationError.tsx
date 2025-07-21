@@ -41,7 +41,7 @@ export function ValidationErrorList({
   errors,
   className = "",
 }: ValidationErrorListProps) {
-  const errorEntries = Object.entries(errors).filter(([_, message]) => message);
+  const errorEntries = Object.entries(errors).filter(([, message]) => message);
 
   if (errorEntries.length === 0) return null;
 

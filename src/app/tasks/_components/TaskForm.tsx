@@ -16,17 +16,30 @@
 // ヒント: フィールドごとのエラー表示
 
 import createTaskWithState from "@/app/_actions/tasks";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import ActionFeedback from "./ActionFeedback";
 import ValidationError from "./ValidationError";
+import { TaskFieldSchemas, titleSchema } from "@/app/_lib/schemas";
+import { mergeErrors, validateField } from "@/app/_utils/validation";
 
 export default function TaskForm() {
+  const [realTimeError, setRealTimeError] = useState<Record<string, string>>(
+    {}
+  );
   const [state, dispatch, pending] = useActionState(createTaskWithState, {
     success: false,
     message: "",
     errors: {},
   });
+
+  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    const error = validateField(titleSchema, value);
+    setRealTimeError({ [name]: error || "" });
+  };
+
+  const mergedErrors = mergeErrors(state.errors, realTimeError);
 
   return (
     <div className="space-y-4">
@@ -44,12 +57,13 @@ export default function TaskForm() {
             name="title"
             required
             disabled={pending}
+            onChange={handleFieldChange}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               pending ? "bg-gray-100 cursor-not-allowed" : "bg-white"
             } ${state.errors?.title ? "border-red-500" : "border-gray-300"}`}
             placeholder="例: 資料作成"
           />
-          <ValidationError fieldName="title" errors={state.errors} />
+          <ValidationError fieldName="title" errors={mergedErrors} />
         </div>
 
         <div>

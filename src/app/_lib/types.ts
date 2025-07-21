@@ -24,8 +24,3 @@ export interface Task {
 }
 
 export type TaskFormData = z.infer<typeof TaskFormSchema>;
-export type validationResult = {
-  success: boolean;
-  data?: any;
-  issues?: FormErrors;
-};
