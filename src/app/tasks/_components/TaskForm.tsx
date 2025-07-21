@@ -20,7 +20,7 @@ import { useActionState, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import ActionFeedback from "./ActionFeedback";
 import ValidationError from "./ValidationError";
-import { TaskFieldSchemas, titleSchema } from "@/app/_lib/schemas";
+import { titleSchema } from "@/app/_lib/schemas";
 import { mergeErrors, validateField } from "@/app/_utils/validation";
 
 export default function TaskForm() {
