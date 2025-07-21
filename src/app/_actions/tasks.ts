@@ -1,7 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { ActionResults, FormErrors, Task } from "../_lib/types";
+import { ActionResults, Task } from "../_lib/types";
+import { formDataToObject, zodErrorToFormErrors } from "../_utils/validation";
+import { TaskFormSchema } from "../_lib/schemas";
 
 // 一時的なデータストレージ（初期データ付き）
 const tasks: Task[] = [
@@ -69,32 +71,26 @@ export default async function createTaskWithState(
   prevState: ActionResults,
   formData: FormData
 ): Promise<ActionResults> {
-  const title = formData.get("title") as string;
-  const priority = formData.get("priority") as "low" | "medium" | "high";
-
-  const errors: FormErrors = {};
-  if (!title || title.trim().length === 0) {
-    errors.title = "タイトルは必須です";
-  } else if (title.trim().length > 100) {
-    errors.title = "タイトルは100文字以内で入力してください";
-  }
-  if (!["low", "medium", "high"].includes(priority)) {
-    errors.priority = "有効な優先度を選択してください";
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return {
-      success: false,
-      message: "入力内容に問題があります",
-      errors,
-    };
-  }
-
   try {
+    const rawData = formDataToObject(formData);
+    const result = TaskFormSchema.safeParse(rawData);
+
+    if (!result.success) {
+      const fieldErrors = zodErrorToFormErrors(result.error);
+
+      return {
+        success: false,
+        message: "入力内容を確認してください",
+        errors: fieldErrors,
+      };
+    }
+
+    const validatedData = result.data;
+
     const newTask: Task = {
       id: Date.now().toString(),
-      title: title.trim(),
-      priority: priority || "medium",
+      title: validatedData.title,
+      priority: validatedData.priority || "medium",
       createdAt: new Date(),
     };
 

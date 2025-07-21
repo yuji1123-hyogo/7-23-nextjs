@@ -1,5 +1,8 @@
 // TODO: アプリケーション全体で使用する型定義を作成
 
+import { z } from "zod";
+import { TaskFormSchema } from "./schemas";
+
 // TODO: Server Actionの戻り値型を定義
 // ヒント: success, message, errors プロパティを持つインターフェース
 export interface ActionResults {
@@ -19,3 +22,10 @@ export interface Task {
   priority: "low" | "medium" | "high";
   createdAt: Date;
 }
+
+export type TaskFormData = z.infer<typeof TaskFormSchema>;
+export type validationResult = {
+  success: boolean;
+  data?: any;
+  issues?: FormErrors;
+};

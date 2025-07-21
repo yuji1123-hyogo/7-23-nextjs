@@ -19,6 +19,7 @@ import createTaskWithState from "@/app/_actions/tasks";
 import { useActionState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import ActionFeedback from "./ActionFeedback";
+import ValidationError from "./ValidationError";
 
 export default function TaskForm() {
   const [state, dispatch, pending] = useActionState(createTaskWithState, {
@@ -48,9 +49,7 @@ export default function TaskForm() {
             } ${state.errors?.title ? "border-red-500" : "border-gray-300"}`}
             placeholder="例: 資料作成"
           />
-          {state.errors?.title && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
-          )}
+          <ValidationError fieldName="title" errors={state.errors} />
         </div>
 
         <div>
@@ -72,9 +71,7 @@ export default function TaskForm() {
             <option value="medium">中</option>
             <option value="high">高</option>
           </select>
-          {state.errors?.priority && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.priority}</p>
-          )}
+          <ValidationError fieldName="priority" errors={state.errors} />
         </div>
 
         <button
