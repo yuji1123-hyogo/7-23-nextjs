@@ -4,6 +4,23 @@ import { getTasks } from "./_actions/tasks";
 
 export default async function Home() {
   const tasks = await getTasks();
+  // TODO: NotificationTestコンポーネントをimport
+  // ヒント: import NotificationTest from '../_components/NotificationTest';
+
+  // TODO: 既存のJSX内にNotificationTestを追加
+  // ヒント: TaskFormとTaskListの間または下部に配置
+
+  // 追加場所の例:
+  // <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  //   既存のTaskForm部分...
+  //   既存のTaskList部分...
+  //
+  //   {/* 新しく追加 */}
+  //   <div className="lg:col-span-2">
+  //     <NotificationTest />
+  //   </div>
+  // </div>
+
   return (
     <div className="container mx-auto p-6 max-w-4xl">
       <div className="mb-8">
