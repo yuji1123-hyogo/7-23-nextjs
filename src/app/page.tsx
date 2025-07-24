@@ -1,6 +1,7 @@
 import TaskForm from "./tasks/_components/TaskForm";
 import TaskList from "./tasks/_components/TaskList";
 import { getTasks } from "./_actions/tasks";
+import Link from "next/link";
 
 export default async function Home() {
   const tasks = await getTasks();
@@ -46,6 +47,16 @@ export default async function Home() {
           </h2>
           <TaskList tasks={tasks} />
         </div>
+      </div>
+      <div className="bg-white rounded-lg shadow-md p-6 mt-8">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">ブログ</h2>
+        <p className="text-gray-600 mb-4">学習記録と技術記事を投稿しています</p>
+        <Link
+          href="/blog"
+          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          ブログを見る →
+        </Link>
       </div>
     </div>
   );
