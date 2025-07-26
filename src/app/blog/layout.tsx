@@ -50,3 +50,5 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
     </div>
   );
 }
+
+//ブログページのレイアウト

@@ -109,25 +109,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           href="/blog"
           className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         >
-          ← 他の記事を読む
+          ← 他の記事を読む2
         </Link>
       </footer>
     </article>
   );
 }
-
-// TODO: メタデータ生成関数を作成（オプション）
-// ヒント: export async function generateMetadata() の形で定義
-// ヒント: 記事のタイトルと内容をメタデータに設定
-// ヒント: 記事が見つからない場合のハンドリングも必要
-
-/*
-export async function generateMetadata({ params }: BlogPostPageProps) {
-  // TODO: 記事データを取得
-  
-  // TODO: 記事が見つからない場合のデフォルトメタデータ
-  
-  // TODO: 記事固有のメタデータを返す
-  // ヒント: title, description を設定
-}
-*/
